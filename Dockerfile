@@ -13,7 +13,6 @@ RUN curl -fsSL "https://awscli.amazonaws.com/awscli-exe-linux-$(uname -m)-${AWSC
   && ./aws/install \
   && rm -rf aws awscliv2.zip \
   && rm -rf \
-        aws \
         /usr/local/aws-cli/v2/current/dist/aws_completer \
         /usr/local/aws-cli/v2/current/dist/awscli/data/ac.index \
         /usr/local/aws-cli/v2/current/dist/awscli/examples \
