@@ -1,14 +1,15 @@
 # Debian 11 is end of life and its CA bundle still trusts the compromised eMudhra roots.
-FROM python:3.13-slim-trixie
+# amd64 only, to match the x86_64 AWS CLI below even when built on an arm64 host.
+FROM --platform=linux/amd64 python:3.13-slim-trixie
 
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && apt-get upgrade -y \
   && apt-get install -y curl unzip
 
-# AWS CLI 2.38.4+ ships a clean CA bundle; the installer matches the build platform.
+# AWS CLI 2.38.4+ ships a clean CA bundle.
 ARG AWSCLI_VERSION=2.38.4
-RUN curl -fsSL "https://awscli.amazonaws.com/awscli-exe-linux-$(uname -m)-${AWSCLI_VERSION}.zip" -o awscliv2.zip \
+RUN curl -fsSL "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-${AWSCLI_VERSION}.zip" -o awscliv2.zip \
   && unzip awscliv2.zip \
   && ./aws/install \
   && rm -rf aws awscliv2.zip \
